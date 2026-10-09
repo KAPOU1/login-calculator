@@ -7,7 +7,7 @@ if (user) {
 }
 document.querySelector('#logout').addEventListener('click', () => {
     localStorage.removeItem('currentUser');
-    window.location.href = 'maine.html';
+    window.location.href = 'index.html';
 });
 
 // الأزرار
