@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+    <script>
+        // حماية: كان ما عملش Login يرجعو لصفحة الدخول
+        if (!localStorage.getItem('currentUser')) {
+            window.location.href = 'maine.html';
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <h2 class="logo">Calculator</h2>
+        <nav class="navigateur">
+            <span id="welcome"></span>
+            <button id="logout" class="btn-logout">Logout</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="note">
+            <h3>Simple Calculator Project</h3>
+            <p>A <strong>basic calculator</strong> web application built with <strong>HTML, CSS and JavaScript</strong>.
+            </p>
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Core functions:</strong> addition, subtraction, multiplication and division.</li>
+                <li><strong>Responsive layout:</strong> adapts to different screen sizes.</li>
+                <li><strong>Instant reset:</strong> the AC button clears everything.</li>
+            </ul>
+        </section>
+
+        <section class="calculator">
+            <input type="text" id="display" readonly placeholder="0">
+            <div class="keys">
+                <button class="key op" data-action="clear">AC</button>
+                <button class="key op" data-action="delete">DE</button>
+                <button class="key op" data-value=".">.</button>
+                <button class="key op" data-value="/">÷</button>
+
+                <button class="key" data-value="7">7</button>
+                <button class="key" data-value="8">8</button>
+                <button class="key" data-value="9">9</button>
+                <button class="key op" data-value="*">×</button>
+
+                <button class="key" data-value="4">4</button>
+                <button class="key" data-value="5">5</button>
+                <button class="key" data-value="6">6</button>
+                <button class="key op" data-value="-">−</button>
+
+                <button class="key" data-value="1">1</button>
+                <button class="key" data-value="2">2</button>
+                <button class="key" data-value="3">3</button>
+                <button class="key op" data-value="+">+</button>
+
+                <button class="key" data-value="0">0</button>
+                <button class="key" data-value="00">00</button>
+                <button class="key equal" data-action="equal">=</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>By MR. Trabelsi Karim</footer>
+
+    <script src="calculator.js"></script>
+</body>
+
+</html>

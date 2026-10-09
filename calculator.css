@@ -1,0 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: url('wallhaven-42qxzy.jpg') no-repeat center center;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* ===== Header ===== */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 25, 60, 0.45);
+    backdrop-filter: blur(10px);
+    z-index: 99;
+}
+
+.logo {
+    font-size: 2em;
+    user-select: none;
+}
+
+.navigateur {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+#welcome {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.btn-logout {
+    height: 50px;
+    padding: 0 25px;
+    background: transparent;
+    border: 2px solid #ffb26b;
+    border-radius: 6px;
+    color: #ffb26b;
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.btn-logout:hover {
+    background: #ffb26b;
+    color: #0b1d4a;
+}
+
+/* ===== Layout ===== */
+.container {
+    min-height: 100vh;
+    padding: 130px 40px 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+
+/* ===== Note ===== */
+.note {
+    max-width: 320px;
+    padding: 25px;
+    background: rgba(10, 25, 60, 0.35);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    line-height: 1.6;
+}
+
+.note h3 {
+    color: #ffb26b;
+    margin: 10px 0 8px;
+}
+
+.note ul {
+    padding-left: 20px;
+}
+
+.note li {
+    margin-bottom: 8px;
+}
+
+/* ===== Calculator ===== */
+.calculator {
+    width: 360px;
+    padding: 25px;
+    background: rgba(10, 25, 60, 0.35);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 178, 107, .6);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+}
+
+#display {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    color: #fff;
+    font-size: 2.5em;
+    text-align: right;
+}
+
+.keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.key {
+    height: 60px;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.3em;
+    cursor: pointer;
+    box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.05),
+        4px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: .2s;
+}
+
+.key:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.key:active {
+    transform: scale(0.95);
+}
+
+.key.op {
+    color: #ffb26b;
+}
+
+.key.equal {
+    grid-column: span 2;
+    background: linear-gradient(90deg, #ff9966, #ffb26b);
+    color: #0b1d4a;
+    font-weight: 600;
+}
+
+.key.equal:hover {
+    background: linear-gradient(90deg, #ffb26b, #ffd1a3);
+}
+
+/* ===== Footer ===== */
+footer {
+    position: fixed;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    text-shadow: 0 0 10px rgba(0, 0, 0, .8);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+    header {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        font-size: 1.4em;
+    }
+
+    #welcome {
+        display: none;
+    }
+
+    .container {
+        flex-direction: column;
+        padding-top: 110px;
+        gap: 30px;
+    }
+
+    .calculator {
+        width: 100%;
+        max-width: 360px;
+    }
+}
