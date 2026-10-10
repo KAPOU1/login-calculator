@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <style>
         body {
@@ -20,7 +21,6 @@
         }
 
         button {
-            margin-top: 20px;
             padding: 10px 25px;
             border: 2px solid #fff;
             background: transparent;
@@ -34,35 +34,64 @@
             background: #fff;
             color: #162938;
         }
-        .btn{
-            height: 110px ;
+
+        /* زوز بوتونات جنب بعضهم: واحد يمين وواحد يسار */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;           /* الفراغ بين البوتونين */
+            margin-top: 30px;
+        }
+
+        .btn {
+            width: 140px;
+            height: 110px;
             font-size: 0.9em;
         }
-        .btn:hover{
-             border: 2px solid rgba(255, 178, 107, .6);
-             background: rgba(10, 25, 60, 0.35);
-             color:  rgba(255, 178, 107, .6);
-             font-size: 1.2em;
+
+        .btn:hover {
+            border: 2px solid rgba(255, 178, 107, .6);
+            background: rgba(10, 25, 60, 0.35);
+            color: rgba(255, 178, 107, .6);
+            font-size: 1.2em;
         }
-        .btn-log{
+
+        /* Logout في النص تحت */
+        .btn-log {
             margin-top: 50px;
         }
-        .btn-log:hover{
-             border: 2px solid rgba(255, 178, 107, .6);
-             background: rgba(10, 25, 60, 0.35);
-             color: red;
-             font-size: 1.1em;
+
+        .btn-log:hover {
+            border: 2px solid rgba(255, 178, 107, .6);
+            background: rgba(10, 25, 60, 0.35);
+            color: red;
+            font-size: 1.1em;
         }
-       .wel{
-        text-shadow: 2px  5px rgba(255, 178, 107, .6);
-       }
+
+        .wel {
+            text-shadow: 2px 5px rgba(255, 178, 107, .6);
+        }
+
+        /* تلفون: البوتونات تنزلو وحدة تحت وحدة */
+        @media (max-width: 500px) {
+            .buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <h1 id="welcome" class="wel"></h1>
-    <button id ="Calculator" class="btn">  <span class="icon"><ion-icon name="calculator"></ion-icon></span>Calculator</button>
-    <button id="logout"  class="btn-log">Logout</button>
+
+    <div class="buttons">
+        <button id="Calculator" class="btn"><span class="icon"><ion-icon name="calculator"></ion-icon></span> Calculator</button>
+        <button id="Moyenne" class="btn"><span class="icon"><ion-icon name="school"></ion-icon></span> Moyenne</button>
+    </div>
+
+    <button id="logout" class="btn-log">Logout</button>
 
     <script>
         const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -78,10 +107,14 @@
             localStorage.removeItem('currentUser');
             window.location.href = 'index.html';
         });
-        const Calculator =document.querySelector ('#Calculator').addEventListener('click', () =>{
-            window.location.href = 'calculator.html';
-        })
 
+        document.querySelector('#Calculator').addEventListener('click', () => {
+            window.location.href = 'calculator.html';
+        });
+
+        document.querySelector('#Moyenne').addEventListener('click', () => {
+            window.location.href = 'moyenne.html';
+        });
     </script>
     <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
