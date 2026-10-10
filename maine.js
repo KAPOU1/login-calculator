@@ -8,7 +8,7 @@ const loginForm = document.querySelector('#login-form');
 const registerForm = document.querySelector('#register-form');
 const loginError = document.querySelector('#login-error');
 const registerError = document.querySelector('#register-error');
-
+const btnPoup = document.querySelector('.btn-login-popup');
 // التنقل بين الفورمات
 registerLink.addEventListener('click', (e) => {
     e.preventDefault();
@@ -18,6 +18,7 @@ loginLink.addEventListener('click', (e) => {
     e.preventDefault();
     wrapper.classList.remove('active');
 });
+
 btnPopup.addEventListener('click', () => {
     wrapper.classList.add('active-popup');
 });
@@ -35,7 +36,7 @@ registerForm.addEventListener('submit', (e) => {
 
     const users = JSON.parse(localStorage.getItem('users')) || [];
     if (users.some(u => u.email === email)) {
-        registerError.textContent = 'هذا الإيميل مسجّل من قبل';
+        registerError.textContent ='This email is already registered.';
         return;
     }
     users.push({ name, email, password });
@@ -56,9 +57,9 @@ loginForm.addEventListener('submit', (e) => {
     const user = users.find(u => u.email === email && u.password === password);
 
     if (!user) {
-        loginError.textContent = 'الإيميل ولا الباسورد غالطين';
+        loginError.textContent = 'The email or password is incorrect.';
         return;
     }
     localStorage.setItem('currentUser', JSON.stringify(user));
-    window.location.href = 'calculator.html';
+    window.location.href = 'home.html';
 });

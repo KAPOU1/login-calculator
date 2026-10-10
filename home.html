@@ -34,28 +34,57 @@
             background: #fff;
             color: #162938;
         }
+        .btn{
+            height: 110px ;
+            font-size: 0.9em;
+        }
+        .btn:hover{
+             border: 2px solid rgba(255, 178, 107, .6);
+             background: rgba(10, 25, 60, 0.35);
+             color:  rgba(255, 178, 107, .6);
+             font-size: 1.2em;
+        }
+        .btn-log{
+            margin-top: 50px;
+        }
+        .btn-log:hover{
+             border: 2px solid rgba(255, 178, 107, .6);
+             background: rgba(10, 25, 60, 0.35);
+             color: red;
+             font-size: 1.1em;
+        }
+       .wel{
+        text-shadow: 2px  5px rgba(255, 178, 107, .6);
+       }
     </style>
 </head>
 
 <body>
-    <h1 id="welcome"></h1>
-    <button id="logout">Logout</button>
+    <h1 id="welcome" class="wel"></h1>
+    <button id ="Calculator" class="btn">  <span class="icon"><ion-icon name="calculator"></ion-icon></span>Calculator</button>
+    <button id="logout"  class="btn-log">Logout</button>
 
     <script>
         const user = JSON.parse(localStorage.getItem('currentUser'));
 
         // كان ما دخلش، نرجّعوه للـ login
         if (!user) {
-            window.location.href = 'maine.html';
+            window.location.href = 'index.html';
         } else {
             document.querySelector('#welcome').textContent = 'Welcome ' + user.name + ' 👋';
         }
 
         document.querySelector('#logout').addEventListener('click', () => {
             localStorage.removeItem('currentUser');
-            window.location.href = 'maine.html';
+            window.location.href = 'index.html';
         });
+        const Calculator =document.querySelector ('#Calculator').addEventListener('click', () =>{
+            window.location.href = 'calculator.html';
+        })
+
     </script>
+    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
