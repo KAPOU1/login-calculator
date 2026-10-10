@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moyenne</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url('wallhaven-42qxzy.jpg') no-repeat center center;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* ===== Header ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 25, 60, 0.45);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+        }
+
+        .logo { font-size: 2em; user-select: none; }
+        .logo:hover { color: #ffb26b; }
+
+        .navigateur { display: flex; align-items: center; gap: 25px; }
+
+        #welcome {
+            font-size: 1.2em;
+            font-weight: 500;
+            text-shadow: 1px 2px rgba(255, 178, 107, .6);
+        }
+
+        .btn-logout {
+            height: 50px;
+            padding: 0 25px;
+            background: transparent;
+            border: 2px solid #ffb26b;
+            border-radius: 6px;
+            color: #ffb26b;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: .4s;
+        }
+
+        .btn-logout:hover { background: #ffb26b; color: #0b1d4a; }
+
+        /* ===== Layout ===== */
+        .container {
+            min-height: 100vh;
+            padding: 130px 40px 70px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* ===== Card ===== */
+        .card {
+            width: 100%;
+            max-width: 760px;
+            padding: 30px;
+            background: rgba(10, 25, 60, 0.35);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 178, 107, .6);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+        }
+
+        .card h2 { color: #ffb26b; margin-bottom: 8px; }
+        .card p { margin-bottom: 20px; line-height: 1.6; }
+
+        .group-title { margin: 15px 0 8px; font-size: .9em; opacity: .8; }
+
+        .levels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+        .level {
+            min-height: 55px;
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.05em;
+            cursor: pointer;
+            box-shadow: -4px -4px 10px rgba(255, 255, 255, 0.05),
+                4px 4px 10px rgba(0, 0, 0, 0.3);
+            transition: .2s;
+        }
+
+        .level:hover { background: rgba(255, 255, 255, 0.2); color: #ffb26b; }
+        .level:active { transform: scale(0.95); }
+
+        /* ===== Matières ===== */
+        .warn {
+            margin-bottom: 18px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 178, 107, .6);
+            border-radius: 10px;
+            font-size: .85em;
+            line-height: 1.5;
+            background: rgba(255, 178, 107, .08);
+        }
+
+        .subject {
+            margin-bottom: 14px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+        }
+
+        .s-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .s-head .name { flex: 1; font-weight: 500; }
+
+        .s-head .coef { color: #ffb26b; font-size: .85em; display: flex; align-items: center; gap: 6px; }
+
+        .coef-in { width: 60px !important; height: 30px !important; font-size: .95em !important; color: #ffb26b !important; }
+
+        .s-avg { min-width: 60px; text-align: right; font-weight: 600; color: #ffb26b; }
+
+        .fields { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .fields label { display: flex; flex-direction: column; font-size: .75em; opacity: .9; gap: 3px; }
+
+        .subject input {
+            width: 80px;
+            height: 38px;
+            padding: 0 8px;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            border-bottom: 2px solid #fff;
+            border-radius: 8px;
+            outline: none;
+            color: #fff;
+            font-size: 1em;
+            text-align: right;
+        }
+
+        .info { display: flex; justify-content: space-between; margin: 15px 0; font-weight: 500; }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #ffb26b;
+            text-align: center;
+        }
+
+        #result.pulse { animation: pulse .5s ease; }
+
+        @keyframes pulse {
+            0%   { transform: scale(1); }
+            40%  { transform: scale(1.12); text-shadow: 0 0 15px rgba(255, 178, 107, .8); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-back {
+            margin-top: 15px;
+            padding: 8px 18px;
+            background: transparent;
+            border: 2px solid #fff;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-back:hover { background: #fff; color: #0b1d4a; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 900px) {
+            header { padding: 15px 20px; }
+            .logo { font-size: 1.4em; }
+            #welcome { display: none; }
+            .container { padding: 110px 15px 50px; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2 class="logo">Moyenne</h2>
+        <div class="navigateur">
+            <span id="welcome"></span>
+            <button class="btn-logout" id="logout">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card" id="step"></div>
+    </div>
+
+    <script>
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!user) {
+            window.location.href = 'index.html';
+        } else {
+            document.querySelector('#welcome').textContent = 'Welcome ' + user.name + ' 👋';
+        }
+
+        document.querySelector('#logout').addEventListener('click', () => {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        });
+
+        /* =====================================================
+           الداتا
+           كل مادة: [الاسم, coef, الخانات, (خانات الباك)]
+           كل خانة: [الاسم, الوزن داخل المادة]
+           معدل المادة = مجموع(نقطة × وزن) ÷ مجموع الأوزان (للخانات المعمّرة)
+           ⚠️ الوزن 2 للـ DS تقدير، والـ coefficients خارج الباك تقديرية
+           ===================================================== */
+
+        // أنواع الخانات
+        const ODD    = [['Oral', 1], ['DC', 1], ['DS', 2]];
+        const FR     = [['Oral', 1], ['DC1', 1], ['DC2', 1], ['DS', 2]];
+        const DC12   = [['DC1', 1], ['DC2', 1], ['DS', 2]];
+        const TP12   = [['TP', 1], ['DC1', 1], ['DC2', 1], ['DS', 2]];
+        const DCDS   = [['DC', 1], ['DS', 2]];
+        const NOTE   = [['Note', 1]];
+        const INFO_BAC = [['Écrit', 0.5], ['Pratique', 0.5]];
+        const ALGO_BAC = [['Écrit', 2], ['Pratique', 1]];
+
+        const NIVEAUX = [
+            { id: '7eme', label: '7ème', groupe: 'Collège' },
+            { id: '8eme', label: '8ème', groupe: 'Collège' },
+            { id: '9eme', label: '9ème', groupe: 'Collège' },
+            { id: '1ere', label: '1ère année', groupe: 'Lycée' },
+            { id: '2eme', label: '2ème année', groupe: 'Lycée' },
+            { id: '3eme', label: '3ème année', groupe: 'Lycée' },
+            { id: 'bac', label: 'Bac (4ème)', groupe: 'Lycée' }
+        ];
+
+        // الشعب لكل مستوى
+        const SECTIONS = {
+            '2eme': ['Sciences', 'Lettres', 'Économie et services', "Technologie de l'informatique"],
+            '3eme': ['Mathématiques', 'Sciences expérimentales', "Sciences de l'informatique", 'Sciences techniques', 'Économie et gestion', 'Lettres'],
+            'bac':  ['Mathématiques', 'Sciences expérimentales', "Sciences de l'informatique", 'Sciences techniques', 'Économie et gestion', 'Lettres']
+        };
+
+        // مواد 3ème والباك (coef الباك من مواقع تونسية، 3ème نفس الأرقام كقيمة افتراضية)
+        const LYCEE_FINAL = {
+            'Mathématiques': [
+                ['Mathématiques', 4, DC12], ['Sciences physiques', 4, TP12], ['SVT', 1, TP12],
+                ['Français', 1, FR], ['Anglais', 1, ODD], ['Philosophie', 1, ODD], ['Arabe', 1, ODD],
+                ['Informatique', 1, DCDS, INFO_BAC], ['Éducation physique', 1, DCDS]
+            ],
+            'Sciences expérimentales': [
+                ['SVT', 4, TP12], ['Sciences physiques', 4, TP12], ['Mathématiques', 3, DC12],
+                ['Français', 1, FR], ['Anglais', 1, ODD], ['Philosophie', 1, ODD], ['Arabe', 1, ODD],
+                ['Informatique', 1, DCDS, INFO_BAC], ['Éducation physique', 1, DCDS]
+            ],
+            "Sciences de l'informatique": [
+                ['Mathématiques', 3, DC12], ['Programmation', 3, TP12, ALGO_BAC], ['STI', 3, DC12],
+                ['Sciences physiques', 2, TP12], ['Français', 1, FR], ['Anglais', 1, ODD],
+                ['Philosophie', 1, ODD], ['Arabe', 1, ODD], ['Éducation physique', 1, DCDS]
+            ],
+            'Sciences techniques': [
+                ['Technologie', 3, DC12], ['Mathématiques', 3, DC12], ['Sciences physiques', 3, TP12],
+                ['TP Technologie', 1, [['TP', 1]]], ['Français', 1, FR], ['Anglais', 1, ODD],
+                ['Philosophie', 1, ODD], ['Arabe', 1, ODD], ['Informatique', 1, DCDS, INFO_BAC], ['Éducation physique', 1, DCDS]
+            ],
+            'Économie et gestion': [
+                ['Gestion', 3, DC12], ['Économie', 3, DC12], ['Mathématiques', 2, DC12], ['Histoire-Géo', 2, ODD],
+                ['Français', 1, FR], ['Anglais', 1, ODD], ['Philosophie', 1, ODD], ['Arabe', 1, ODD],
+                ['Informatique', 1, DCDS, INFO_BAC], ['Éducation physique', 1, DCDS]
+            ],
+            'Lettres': [
+                ['Arabe', 4, ODD], ['Philosophie', 4, ODD], ['Histoire-Géo', 3, ODD], ['Français', 2, FR],
+                ['Anglais', 2, ODD], ['Pensée islamique', 1, DCDS], ['Informatique', 1, DCDS, INFO_BAC],
+                ['Éducation physique', 1, DCDS]
+            ]
+        };
+
+        // مواد 2ème (⚠️ coefficients تقديرية — عدّلها من الـ bulletin)
+        const LYCEE_2EME = {
+            'Sciences': [
+                ['Arabe', 2, ODD], ['Français', 2, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 3, DC12],
+                ['Sciences physiques', 2, TP12], ['SVT', 2, TP12], ['Technologie', 1.5, DC12],
+                ['Histoire', 1, ODD], ['Géographie', 1, ODD], ['Pensée islamique', 1, ODD],
+                ['Éducation civique', 1, DCDS], ['Éducation physique', 1, DCDS]
+            ],
+            'Lettres': [
+                ['Arabe', 3, ODD], ['Français', 2, FR], ['Anglais', 2, ODD], ['Histoire', 1.5, ODD],
+                ['Géographie', 1.5, ODD], ['Mathématiques', 1.5, DC12], ['Pensée islamique', 1, ODD],
+                ['Éducation civique', 1, DCDS], ['Informatique', 1, DCDS], ['Éducation physique', 1, DCDS]
+            ],
+            'Économie et services': [
+                ['Arabe', 2, ODD], ['Français', 2, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 2, DC12],
+                ['Économie', 2, DC12], ['Gestion', 2, DC12], ['Histoire', 1, ODD], ['Géographie', 1, ODD],
+                ['Pensée islamique', 1, ODD], ['Éducation civique', 1, DCDS], ['Éducation physique', 1, DCDS]
+            ],
+            "Technologie de l'informatique": [
+                ['Arabe', 1.5, ODD], ['Français', 1.5, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 3, DC12],
+                ['Sciences physiques', 2, TP12], ['Informatique', 3, DC12], ['Technologie', 2, DC12],
+                ['Pensée islamique', 1, ODD], ['Éducation physique', 1, DCDS]
+            ]
+        };
+
+        // المستويات بدون شعب (⚠️ coefficients تقديرية)
+        const SIMPLE = {
+            '7eme': [['Arabe', 2, ODD], ['Français', 2, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 2, DC12],
+                     ['Sciences physiques', 1, DC12], ['SVT', 1, DC12], ['Histoire-Géo', 1, ODD], ['Éducation islamique', 1, DCDS]],
+            '8eme': [['Arabe', 2, ODD], ['Français', 2, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 2, DC12],
+                     ['Sciences physiques', 1, DC12], ['SVT', 1, DC12], ['Histoire-Géo', 1, ODD], ['Éducation islamique', 1, DCDS]],
+            '9eme': [['Arabe', 2, ODD], ['Français', 2, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 2, DC12],
+                     ['Sciences physiques', 1, DC12], ['SVT', 1, DC12], ['Histoire-Géo', 1, ODD], ['Éducation islamique', 1, DCDS]],
+            '1ere': [['Arabe', 2, ODD], ['Français', 2, FR], ['Anglais', 1.5, ODD], ['Mathématiques', 3, DC12],
+                     ['Sciences physiques', 2, TP12], ['SVT', 1.5, TP12], ['Technologie', 1.5, DC12], ['Histoire', 1, ODD],
+                     ['Géographie', 1, ODD], ['Pensée islamique', 1, ODD], ['Éducation civique', 1, DCDS], ['Éducation physique', 1, DCDS]]
+        };
+
+        /* ================= الحالة ================= */
+        let niveau = null;
+        let section = null;
+        const step = document.querySelector('#step');
+
+        function labelNiveau() {
+            return NIVEAUX.find(n => n.id === niveau).label + (section ? ' - ' + section : '');
+        }
+
+        // المواد حسب الاختيار + هل الـ coefficients مؤكدة
+        function getConfig() {
+            if (niveau === 'bac') {
+                const list = LYCEE_FINAL[section].map(m => [m[0], m[1], m[3] || NOTE]);
+                return { matieres: list, verifie: true, mode: 'bac' };
+            }
+            if (niveau === '3eme') return { matieres: LYCEE_FINAL[section], verifie: false, mode: 'annee' };
+            if (niveau === '2eme') return { matieres: LYCEE_2EME[section], verifie: false, mode: 'annee' };
+            return { matieres: SIMPLE[niveau], verifie: false, mode: 'annee' };
+        }
+
+        /* ================= الخطوة 1: المستوى ================= */
+        function showNiveaux() {
+            niveau = null; section = null;
+            step.innerHTML = '<h2>Calcul de la moyenne</h2><p>Choisis ton niveau :</p>' +
+                ['Collège', 'Lycée'].map(g => `
+                    <div class="group-title">${g}</div>
+                    <div class="levels">
+                        ${NIVEAUX.filter(n => n.groupe === g)
+                            .map(n => `<button class="level" data-id="${n.id}">${n.label}</button>`).join('')}
+                    </div>`).join('');
+
+            step.querySelectorAll('.level').forEach(b => b.addEventListener('click', () => {
+                niveau = b.dataset.id;
+                SECTIONS[niveau] ? showSections() : showMatieres();
+            }));
+        }
+
+        /* ================= الخطوة 2: الشعبة ================= */
+        function showSections() {
+            step.innerHTML = `<h2>Choisis ta section</h2><p>${labelNiveau()}</p>
+                <div class="levels">
+                    ${SECTIONS[niveau].map(s => `<button class="level" data-s="${s}">${s}</button>`).join('')}
+                </div>
+                <button class="btn-back" id="back">← Retour</button>`;
+
+            step.querySelectorAll('.level').forEach(b => b.addEventListener('click', () => {
+                section = b.dataset.s;
+                showMatieres();
+            }));
+            step.querySelector('#back').addEventListener('click', showNiveaux);
+        }
+
+        /* ================= الخطوة 3: المواد والنقاط ================= */
+        function showMatieres() {
+            const { matieres, verifie, mode } = getConfig();
+            // المادة الاختيارية: كان في 3ème والباك
+            const avecOption = niveau === '3eme' || niveau === 'bac';
+
+            const note = mode === 'bac'
+                ? 'Notes de l\'examen du Bac. Les coefficients viennent de sites tunisiens (غير رسمية) — راجعهم مع الوزارة.'
+                : '⚠️ coefficients تقريبية، عدّلها من الـ bulletin متاعك (الخانة البرتقالية). معدل المادة: DS يحسب مرتين (تقدير).';
+
+            step.innerHTML = `<h2>${labelNiveau()}</h2>
+                <div class="warn">${note}</div>
+                ${matieres.map((m, i) => `
+                    <div class="subject" data-i="${i}">
+                        <div class="s-head">
+                            <span class="name">${m[0]}</span>
+                            <label class="coef">coef <input class="coef-in" type="number" min="0" step="0.5" value="${m[1]}"></label>
+                            <span class="s-avg">--</span>
+                        </div>
+                        <div class="fields">
+                            ${m[2].map((f, j) => `
+                                <label>${f[0]}
+                                    <input class="note" type="number" min="0" max="20" step="0.01" data-j="${j}" placeholder="--">
+                                </label>`).join('')}
+                        </div>
+                    </div>`).join('')}
+                ${avecOption ? `
+                    <div class="subject" id="option">
+                        <div class="s-head"><span class="name">Matière optionnelle (bonus)</span><span class="s-avg" id="opt-avg">--</span></div>
+                        <div class="fields">
+                            ${(niveau === 'bac' ? NOTE : ODD).map(f => `<label>${f[0]}<input class="opt" type="number" min="0" max="20" step="0.01" data-w="${f[1]}" placeholder="--"></label>`).join('')}
+                        </div>
+                    </div>` : ''}
+                <div class="info"><span>Matières remplies : <b id="counter">0</b> / ${matieres.length}</span></div>
+                <div id="result">Moyenne générale : --</div>
+                <button class="btn-back" id="back">← Retour</button>`;
+
+            const res = step.querySelector('#result');
+            const rows = [...step.querySelectorAll('.subject[data-i]')];
+            let affiche = 0;
+            let anim = null;
+
+            // أنيماسيون: الرقم يتبدل بالتدريج
+            function animer(vers) {
+                cancelAnimationFrame(anim);
+                const depart = affiche, duree = 500, debut = performance.now();
+                res.classList.remove('pulse');
+                void res.offsetWidth;
+                res.classList.add('pulse');
+                function frame(t) {
+                    const p = Math.min((t - debut) / duree, 1);
+                    affiche = depart + (vers - depart) * (1 - Math.pow(1 - p, 3));
+                    res.textContent = 'Moyenne générale : ' + affiche.toFixed(2) + ' / 20';
+                    if (p < 1) anim = requestAnimationFrame(frame);
+                }
+                anim = requestAnimationFrame(frame);
+            }
+
+            // معدل مادة = مجموع(نقطة × وزن) ÷ مجموع الأوزان
+            function moyenneMatiere(row, champs) {
+                let s = 0, w = 0;
+                row.querySelectorAll('.note').forEach(inp => {
+                    if (inp.value === '') return;
+                    const n = Math.min(20, Math.max(0, parseFloat(inp.value)));
+                    const poids = champs[inp.dataset.j][1];
+                    s += n * poids;
+                    w += poids;
+                });
+                return w === 0 ? null : s / w;
+            }
+
+            function calculer() {
+                let points = 0, totalCoef = 0, remplies = 0;
+
+                rows.forEach(row => {
+                    const m = matieres[row.dataset.i];
+                    const moy = moyenneMatiere(row, m[2]);
+                    row.querySelector('.s-avg').textContent = moy === null ? '--' : moy.toFixed(2);
+                    if (moy === null) return;
+                    const coef = Math.max(0, parseFloat(row.querySelector('.coef-in').value) || 0);
+                    points += moy * coef;
+                    totalCoef += coef;
+                    remplies++;
+                });
+
+                // المادة الاختيارية: النقاط اللي فوق 10 تتزاد كـ bonus (coef 1) — تقدير
+                let bonus = 0;
+                const opt = step.querySelector('#option');
+                if (opt) {
+                    let s = 0, w = 0;
+                    opt.querySelectorAll('.opt').forEach(inp => {
+                        if (inp.value === '') return;
+                        const poids = parseFloat(inp.dataset.w);
+                        s += Math.min(20, Math.max(0, parseFloat(inp.value))) * poids;
+                        w += poids;
+                    });
+                    const mo = w === 0 ? null : s / w;
+                    step.querySelector('#opt-avg').textContent = mo === null ? '--' : mo.toFixed(2);
+                    if (mo !== null) bonus = Math.max(0, mo - 10);
+                }
+
+                step.querySelector('#counter').textContent = remplies;
+
+                if (totalCoef === 0) {
+                    cancelAnimationFrame(anim);
+                    affiche = 0;
+                    res.textContent = 'Moyenne générale : --';
+                } else {
+                    animer((points + bonus) / totalCoef);
+                }
+            }
+
+            // كل تغيير (نقطة، coef، اختيارية) يحدّث المعدل توا
+            // النقطة ما تفوتش 20 (ولا تنقص على 0)
+            step.querySelectorAll('.note, .opt').forEach(inp => inp.addEventListener('input', () => {
+                if (inp.value === '') return;
+                const v = parseFloat(inp.value);
+                if (v > 20) inp.value = 20;
+                if (v < 0) inp.value = 0;
+            }));
+
+            step.querySelectorAll('input').forEach(i => i.addEventListener('input', calculer));
+
+            step.querySelector('#back').addEventListener('click', () => {
+                SECTIONS[niveau] ? showSections() : showNiveaux();
+            });
+        }
+
+        showNiveaux();
+    </script>
+</body>
+
+</html>
