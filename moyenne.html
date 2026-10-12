@@ -354,8 +354,7 @@
             return { matieres: SIMPLE[niveau], verifie: false, mode: 'annee' };
         }
 
-        /* ================= الخطوة 1: المستوى ================= */
-        function showNiveaux() {
+    /* ================= Étape 1 : Niveau ================= */        function showNiveaux() {
             niveau = null; section = null;
             step.innerHTML = '<h2>Calcul de la moyenne</h2><p>Choisis ton niveau :</p>' +
                 ['Collège', 'Lycée'].map(g => `
@@ -371,8 +370,7 @@
             }));
         }
 
-        /* ================= الخطوة 2: الشعبة ================= */
-        function showSections() {
+    /* ================= Étape 2 : Filière ================= */        function showSections() {
             step.innerHTML = `<h2>Choisis ta section</h2><p>${labelNiveau()}</p>
                 <div class="levels">
                     ${SECTIONS[niveau].map(s => `<button class="level" data-s="${s}">${s}</button>`).join('')}
@@ -386,15 +384,14 @@
             step.querySelector('#back').addEventListener('click', showNiveaux);
         }
 
-        /* ================= الخطوة 3: المواد والنقاط ================= */
-        function showMatieres() {
+/* ================= Étape 3 : Matériaux et points ================= */        function showMatieres() {
             const { matieres, verifie, mode } = getConfig();
             // المادة الاختيارية: كان في 3ème والباك
             const avecOption = niveau === '3eme' || niveau === 'bac';
 
             const note = mode === 'bac'
-                ? 'Notes de l\'examen du Bac. Les coefficients viennent de sites tunisiens (غير رسمية) — راجعهم مع الوزارة.'
-                : '⚠️ coefficients تقريبية، عدّلها من الـ bulletin متاعك (الخانة البرتقالية). معدل المادة: DS يحسب مرتين (تقدير).';
+                ? 'Notes de lexamen du Bac.Les coefficients viennent de sites tunisiens (non officiels) — vérifiez - les auprès du ministère.'
+                : '⚠️ Les coefficients sont approximatifs ; ajustez-les à partir de votre bulletin (case orange). Moyenne de la matière : le DS compte double (estimation).';
 
             step.innerHTML = `<h2>${labelNiveau()}</h2>
                 <div class="warn">${note}</div>

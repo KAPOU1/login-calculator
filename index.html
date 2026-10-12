@@ -5,17 +5,22 @@
     <link rel="stylesheet" href="maine.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MainHomme</title>
+    <title>Main Home</title>
+    <style>
+        .page[hidden] {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <h2 class="Home">Home</h2>
         <nav class="navigateur">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Contact</a>
+            <a href="#" data-page="home">Home</a>
+            <a href="#" data-page="about">About</a>
+            <a href="#" data-page="services">Services</a>
+            <a href="#" data-page="contact">Contact</a>
             <button class="btn-login-popup">Login</button>
         </nav>
     </header>
@@ -23,7 +28,7 @@
     <div class="wrapper">
         <span class="icon-close"><ion-icon name="close"></ion-icon></span>
 
-        <!-- فورم Login -->
+        <!-- Form Login -->
         <div class="from-box login">
             <h2>Login</h2>
             <form id="login-form" action="#">
@@ -49,7 +54,7 @@
             </form>
         </div>
 
-        <!-- فورم Register -->
+        <!-- Form Register -->
         <div class="from-box register">
             <h2 style="font-size: 3em;">Register</h2>
             <form id="register-form" action="#">
@@ -80,9 +85,62 @@
         </div>
     </div>
 
-    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
-    <script src="maine.js"></script>
+    <!-- Home -->
+    <section class="hero page" id="home">
+        <h1>Calcule ta moyenne en quelques secondes</h1>
+        <p>Du collège au Bac, choisis ton niveau et ta section, écris tes notes, et le calcul se fait tout seul.</p>
+        <a href="#" class="hero-btn" id="start-btn">Commencer</a>
+    </section>
+
+    <!-- About -->
+    <section class="hero page" id="about" hidden>
+        <h1>À propos</h1>
+        <p>Un site simple pour calculer ta moyenne, du collège jusqu'au Bac, selon ta section et tes coefficients.</p>
+    </section>
+
+    <!-- Services -->
+    <section class="hero page" id="services" hidden>
+        <h1>Nos services</h1>
+        <p>Tous les niveaux de la 7ème au Bac, calcul instantané de la moyenne, et coefficients par section.</p>
+    </section>
+
+    
+    <!-- Contact -->
+    <section class="hero page" id="contact" hidden>
+        <h1>Contact</h1>
+        <p>Une question ou une suggestion ? Contactez-nous :</p>
+        <p>📞 <a href="tel:+21679499500" style="color:#ffb066;">79 499 500</a></p>
+        <p>✉️ <a href="mailto:lm.brahmi@yahoo.com" style="color:#ffb066;">lm.brahmi@yahoo.com</a></p>
+        <p>📍 معهد محمد البراهمي المروج 6</p>
+    </section>
+        </section>
+        
+        <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
+        <script src="maine.js"></script>
+        
+        <script>
+                // تبديل الأقسام: نخبّي الكل ونظهر القسم المطلوب
+                
+        </script>       
+    <script>
+        // تبديل الأقسام: نخبّي الكل ونظهر القسم المطلوب
+        const pages = document.querySelectorAll('.page');
+
+        document.querySelectorAll('.navigateur a[data-page]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                pages.forEach(p => p.hidden = true);
+                document.querySelector('#' + link.dataset.page).hidden = false;
+            });
+        });
+
+        // زر Commencer يفتح نافذة الـ Login
+        document.querySelector('#start-btn').addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelector('.btn-login-popup').click();
+        });
+    </script>
 </body>
 
 </html>

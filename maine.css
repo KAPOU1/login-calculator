@@ -31,6 +31,41 @@ body {
     color: #fff;
     user-select: none;
 }
+.hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    max-width: 700px;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 2px solid #ffb066;
+    border-radius: 8px;
+    color: #ffb066;
+    text-decoration: none;
+}
+
+.hero-btn:hover {
+    background: #ffb066;
+    color: #0a2a66;
+}
+
 .navigateur a {
     position: relative;
     font-size: 1.5em;
